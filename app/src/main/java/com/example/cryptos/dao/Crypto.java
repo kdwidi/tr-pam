@@ -1,4 +1,4 @@
-package com.example.cryptos.model;
+package com.example.cryptos.dao;
 
 import com.google.firebase.database.DataSnapshot;
 

@@ -1,8 +1,7 @@
-package com.example.cryptos.model;
+package com.example.cryptos.dao;
 
 import com.google.firebase.database.DataSnapshot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
