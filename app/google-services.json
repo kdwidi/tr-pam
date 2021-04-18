@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1052079549473",
+    "project_id": "tr-pam-c",
+    "storage_bucket": "tr-pam-c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052079549473:android:5869e182593b3c8162c760",
+        "android_client_info": {
+          "package_name": "com.example.cryptos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052079549473-v4f0ck006u8kigvdjtkfeha29m168i6d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDm5hVmEP9o2ixUAxEoyokq_LsShZRCODQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052079549473-v4f0ck006u8kigvdjtkfeha29m168i6d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
