@@ -2,9 +2,12 @@ package com.example.cryptos.activity.main;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
+    private final String TAG = MainActivity.class.getSimpleName();
 
     private ProgressDialog pd;
     private final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -28,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private Crypto crypto;
     private String username;
     private FragmentTransaction fragmentTransaction;
+
+    public static int LOGIN_REQ_CODE = 1;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -118,6 +124,17 @@ public class MainActivity extends AppCompatActivity {
         account.close();
 
          */
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "resultCode: " + resultCode);
+        Log.d(TAG, "requestCode: " + requestCode);
+        if(requestCode == LOGIN_REQ_CODE) {
+            if(resultCode == 1) {
+                setFragment(new AccountFragment());
+            }
+        }
     }
 
     private void setFragment(Fragment fragment) {

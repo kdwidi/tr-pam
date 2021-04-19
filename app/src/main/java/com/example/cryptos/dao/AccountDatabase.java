@@ -8,12 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class Account extends SQLiteOpenHelper {
-    private final String TAG = Account.class.getSimpleName();
+public class AccountDatabase extends SQLiteOpenHelper {
+    private final String TAG = AccountDatabase.class.getSimpleName();
 
     private static final String DBNAME = "account.db";
 
-    public Account(Context c) {
+    public AccountDatabase(Context c) {
         super(c, DBNAME, null, 1);
     }
 
