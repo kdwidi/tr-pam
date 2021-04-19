@@ -37,13 +37,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigationView = findViewById(R.id.bottom_nav_view);
+        BottomNavigationView navigationView = findViewById(R.id.main_bottom_nav_view);
         navigationView.setBackground(null);
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, new HomeFragment())
-                .commit();
+        setFragment(new HomeFragment());
 
         navigationView.setOnNavigationItemSelectedListener(item -> {
                     switch (item.getItemId()) {
@@ -126,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     private void setFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, fragment)
+                .replace(R.id.main_container, fragment)
                 .commit();
     }
 

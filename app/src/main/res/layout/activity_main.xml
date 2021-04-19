@@ -7,10 +7,10 @@
     tools:context=".activity.main.MainActivity">
 
     <FrameLayout
-        android:id="@+id/container"
+        android:id="@+id/main_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/coordinator"
+        app:layout_constraintBottom_toTopOf="@id/main_coordinator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,22 +18,22 @@
     </FrameLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinator"
+        android:id="@+id/main_coordinator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container">
+        app:layout_constraintTop_toBottomOf="@+id/main_container">
 
         <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/nav_bar"
+            android:id="@+id/main_nav_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_nav_view"
+                android:id="@+id/main_bottom_nav_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="16dp"
