@@ -17,6 +17,8 @@ import com.example.cryptos.dao.AccountDatabase;
 
 public class AccountFragment extends Fragment {
 
+    public static int ACCOUNT_REQ_CODE = 101;
+
     public AccountFragment() {
     }
 
@@ -42,10 +44,11 @@ public class AccountFragment extends Fragment {
                     v -> getActivity().startActivityForResult(
                             new Intent(context, AccountActivity.class)
                                     .putExtra("text", "login"),
-                            MainActivity.LOGIN_REQ_CODE
-                            ));
+                            ACCOUNT_REQ_CODE));
             registerBtn.setOnClickListener(
-                    v -> getActivity().startActivity(new Intent(context, AccountActivity.class)));
+                    v -> getActivity().startActivityForResult(
+                            new Intent(context, AccountActivity.class),
+                            ACCOUNT_REQ_CODE));
         } else {
             view = inflater.inflate(R.layout.fragment_account, container, false);
         }

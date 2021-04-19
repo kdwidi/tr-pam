@@ -25,7 +25,7 @@
             app:srcCompat="@drawable/icon" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_username_input"
+            android:id="@+id/register_username_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,13 +33,14 @@
             android:hint="Username">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_username_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_telp_input"
+            android:id="@+id/register_name_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,11 +49,12 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
+                android:id="@+id/register_name_input"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_mobile_number_input"
+            android:id="@+id/register_mobile_number_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,13 +62,14 @@
             android:hint="Mobile Number">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_mobile_number_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_password_input"
+            android:id="@+id/register_password_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,13 +78,14 @@
             app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/register_confirm_password_input"
+            android:id="@+id/register_confirm_password_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,6 +94,7 @@
             app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_confirm_password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />

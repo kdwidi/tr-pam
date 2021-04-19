@@ -17,8 +17,8 @@ import com.example.cryptos.activity.main.fragment.AccountFragment;
 import com.example.cryptos.activity.main.fragment.HomeFragment;
 import com.example.cryptos.activity.main.fragment.MarketFragment;
 import com.example.cryptos.activity.main.fragment.WalletFragment;
-import com.example.cryptos.dao.Crypto;
-import com.example.cryptos.dao.User;
+import com.example.cryptos.model.Crypto;
+import com.example.cryptos.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private Crypto crypto;
     private String username;
     private FragmentTransaction fragmentTransaction;
-
-    public static int LOGIN_REQ_CODE = 1;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -130,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "resultCode: " + resultCode);
         Log.d(TAG, "requestCode: " + requestCode);
-        if(requestCode == LOGIN_REQ_CODE) {
+        if(requestCode == AccountFragment.ACCOUNT_REQ_CODE) {
             if(resultCode == 1) {
                 setFragment(new AccountFragment());
             }
