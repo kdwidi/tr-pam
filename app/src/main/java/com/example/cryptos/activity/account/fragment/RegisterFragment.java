@@ -59,36 +59,53 @@ public class RegisterFragment extends Fragment {
                     new RegisterUserListener() {
                         ProgressDialog pd;
 
+                        final String name = nameInput.getText().toString();
+                        final String mobile = mobileInput.getText().toString();
+                        final String password = passwordInput.getText().toString();
+                        final String confirmPassword = confirmPasswordInput.getText().toString();
+
                         @Override
-                        public void onStart() {
+                        public int onStart() {
                             pd = new ProgressDialog(context);
                             pd.setMessage("Processing...");
                             pd.show();
+
+                            String emptyTextInputMessage = "Please fill all field correctly.";
+
+                            if (name.isEmpty()) {
+                                onCancelled(RegisterUserListener.EMPTY_TEXT_INPUT,
+                                        emptyTextInputMessage, nameInput);
+                                return EXIT;
+                            }
+
+                            if (mobile.isEmpty()) {
+                                onCancelled(RegisterUserListener.EMPTY_TEXT_INPUT,
+                                        emptyTextInputMessage, mobileInput);
+                                return EXIT;
+                            }
+
+                            if (password.isEmpty()) {
+                                onCancelled(RegisterUserListener.EMPTY_TEXT_INPUT,
+                                        emptyTextInputMessage, passwordInput);
+                                return EXIT;
+                            }
+
+                            if (confirmPassword.isEmpty()) {
+                                onCancelled(RegisterUserListener.EMPTY_TEXT_INPUT,
+                                        emptyTextInputMessage, confirmPasswordInput);
+                                return EXIT;
+                            }
+
+                            if (!password.equals(confirmPassword)) {
+                                onCancelled(0,
+                                        "Password not matched.", passwordInput);
+                                return EXIT;
+                            }
+                            return 0;
                         }
 
                         @Override
                         public void onSuccess() {
-                            String emptyTextInputMessage = "Please fill all field correctly.";
-
-                            String name = nameInput.getText().toString();
-                            if (name.isEmpty())
-                                onCancelled(RegisterUserListener.EMPTY_TEXT_INPUT,
-                                        emptyTextInputMessage, nameInput);
-
-                            String mobile = mobileInput.getText().toString();
-                            if (mobile.isEmpty())
-                                onCancelled(RegisterUserListener.EMPTY_TEXT_INPUT,
-                                        emptyTextInputMessage, mobileInput);
-
-                            String password = passwordInput.getText().toString();
-                            if (password.isEmpty())
-                                onCancelled(RegisterUserListener.EMPTY_TEXT_INPUT,
-                                        emptyTextInputMessage, passwordInput);
-
-                            String confirmPassword = confirmPasswordInput.getText().toString();
-                            if (confirmPassword.isEmpty())
-                                onCancelled(RegisterUserListener.EMPTY_TEXT_INPUT,
-                                        emptyTextInputMessage, confirmPasswordInput);
 
                             String USERNAME_PATH = "userid-" + username;
                             String NAME_PATH = USERNAME_PATH + "/name";
@@ -139,27 +156,31 @@ public class RegisterFragment extends Fragment {
 
     void register(Task<DataSnapshot> task, RegisterUserListener listener) {
         final String[] isTaken = {""};
-        listener.onStart();
-        task.addOnCompleteListener(l -> {
-            try {
-                isTaken[0] = l.getResult().child("name").getValue(String.class);
-            } catch (RuntimeExecutionException e) {
-                e.printStackTrace();
-                listener.onCancelled(0,
-                        "Failed contacting server, check your network connection or try again later.",
-                        null);
-            }
-            if (isTaken[0] != null)
-                listener.onCancelled(0,
-                        "Username already taken, please use another.", null);
-            listener.onSuccess();
-        });
+        int exitStatus = listener.onStart();
+        if (exitStatus != listener.EXIT)
+            task.addOnCompleteListener(l -> {
+                try {
+                    isTaken[0] = l.getResult().child("name").getValue(String.class);
+                } catch (RuntimeExecutionException e) {
+                    e.printStackTrace();
+                    listener.onCancelled(0,
+                            "Failed contacting server, check your network connection or try again later.",
+                            null);
+                }
+                if (isTaken[0] != null) {
+                    listener.onCancelled(0,
+                            "Username already taken, please use another.", null);
+                    return;
+                }
+                listener.onSuccess();
+            });
     }
 
     interface RegisterUserListener {
         int EMPTY_TEXT_INPUT = -1;
+        int EXIT = -100;
 
-        void onStart();
+        int onStart();
 
         void onSuccess();
 
