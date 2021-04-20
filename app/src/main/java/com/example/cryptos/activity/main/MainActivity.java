@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.cryptos.R;
 import com.example.cryptos.activity.main.fragment.AccountFragment;
 import com.example.cryptos.activity.main.fragment.HomeFragment;
-import com.example.cryptos.activity.main.fragment.MarketFragment;
 import com.example.cryptos.activity.main.fragment.WalletFragment;
 import com.example.cryptos.model.Crypto;
 import com.example.cryptos.model.User;
@@ -50,9 +49,6 @@ public class MainActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.home_nav:
                             setFragment(new HomeFragment());
-                            break;
-                        case R.id.market_nav:
-                            setFragment(new MarketFragment());
                             break;
                         case R.id.wallet_nav:
                             setFragment(new WalletFragment());
