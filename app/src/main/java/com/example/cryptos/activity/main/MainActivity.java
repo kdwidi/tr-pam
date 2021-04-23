@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private Crypto crypto;
     private String username;
     private FragmentTransaction fragmentTransaction;
-    public static boolean login;
     BottomNavigationView navigationView;
 
     @SuppressLint("NonConstantResourceId")
@@ -42,10 +41,6 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
-
-        AccountDatabase account = new AccountDatabase(this);
-        String username = account.isLoggedIn();
-
 
         navigationView = findViewById(R.id.main_bottom_nav_view);
         navigationView.setBackground(null);
@@ -58,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
                             setFragment(new HomeFragment());
                             break;
                         case R.id.wallet_nav:
-                            //proteksi biasa
+                            AccountDatabase account = new AccountDatabase(this);
+                            String username = account.isLoggedIn();
                             if (username == null) {
                                 navigationView.setSelectedItemId(R.id.account_nav);
                                 break;

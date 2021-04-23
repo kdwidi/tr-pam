@@ -76,8 +76,6 @@ public class LoginFragment extends Fragment {
                 }
                 db.close();
             });
-            //proteksi
-            MainActivity.login = true;
         });
 
         registerHere.setOnClickListener(
