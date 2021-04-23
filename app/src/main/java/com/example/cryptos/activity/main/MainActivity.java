@@ -2,9 +2,11 @@ package com.example.cryptos.activity.main;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 
 import androidx.annotation.Nullable;
@@ -16,6 +18,7 @@ import com.example.cryptos.R;
 import com.example.cryptos.activity.main.fragment.AccountFragment;
 import com.example.cryptos.activity.main.fragment.HomeFragment;
 import com.example.cryptos.activity.main.fragment.WalletFragment;
+import com.example.cryptos.dao.AccountDatabase;
 import com.example.cryptos.model.Crypto;
 import com.example.cryptos.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private Crypto crypto;
     private String username;
     private FragmentTransaction fragmentTransaction;
+    public static boolean login;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -39,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
+
+        AccountDatabase account = new AccountDatabase(this);
+        String username = account.isLoggedIn();
+
 
         BottomNavigationView navigationView = findViewById(R.id.main_bottom_nav_view);
         navigationView.setBackground(null);
@@ -51,8 +59,14 @@ public class MainActivity extends AppCompatActivity {
                             setFragment(new HomeFragment());
                             break;
                         case R.id.wallet_nav:
-                            setFragment(new WalletFragment());
-                            break;
+                            //proteksi biasa
+                            if(username == null) {
+                                navigationView.setSelectedItemId(R.id.account_nav);
+                                break;
+                            } else {
+                                setFragment(new WalletFragment());
+                                break;
+                            }
                         case R.id.account_nav:
                             setFragment(new AccountFragment());
                             break;

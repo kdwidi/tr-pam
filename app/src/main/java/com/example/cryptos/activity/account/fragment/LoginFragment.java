@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.cryptos.R;
+import com.example.cryptos.activity.main.MainActivity;
 import com.example.cryptos.dao.AccountDatabase;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.FirebaseDatabase;
@@ -75,6 +76,8 @@ public class LoginFragment extends Fragment {
                 }
                 db.close();
             });
+            //proteksi
+            MainActivity.login = true;
         });
 
         registerHere.setOnClickListener(

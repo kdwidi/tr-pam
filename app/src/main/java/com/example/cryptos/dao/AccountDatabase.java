@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.view.View;
 
 public class AccountDatabase extends SQLiteOpenHelper {
     private final String TAG = AccountDatabase.class.getSimpleName();
@@ -53,4 +54,9 @@ public class AccountDatabase extends SQLiteOpenHelper {
         }
         return 1;
     }
+
+    public void logout() {
+        getWritableDatabase().delete("login",null,null);
+    }
+
 }

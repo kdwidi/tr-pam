@@ -51,6 +51,13 @@ public class AccountFragment extends Fragment {
                             ACCOUNT_REQ_CODE));
         } else {
             view = inflater.inflate(R.layout.fragment_account, container, false);
+            Button LogoutBtn = view.findViewById(R.id.logout_btn);
+            LogoutBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    account.logout();
+                }
+            });
         }
         return view;
     }
