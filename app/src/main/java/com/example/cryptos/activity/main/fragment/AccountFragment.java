@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cryptos.R;
 import com.example.cryptos.activity.account.AccountActivity;
@@ -52,11 +53,9 @@ public class AccountFragment extends Fragment {
         } else {
             view = inflater.inflate(R.layout.fragment_account, container, false);
             Button LogoutBtn = view.findViewById(R.id.logout_btn);
-            LogoutBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    account.logout();
-                }
+            LogoutBtn.setOnClickListener(v -> {
+                account.logout();
+                getActivity().recreate();
             });
         }
         return view;

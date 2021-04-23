@@ -2,11 +2,9 @@ package com.example.cryptos.activity.main;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 
 import androidx.annotation.Nullable;
@@ -35,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private String username;
     private FragmentTransaction fragmentTransaction;
     public static boolean login;
+    BottomNavigationView navigationView;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         String username = account.isLoggedIn();
 
 
-        BottomNavigationView navigationView = findViewById(R.id.main_bottom_nav_view);
+        navigationView = findViewById(R.id.main_bottom_nav_view);
         navigationView.setBackground(null);
 
         setFragment(new HomeFragment());
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.wallet_nav:
                             //proteksi biasa
-                            if(username == null) {
+                            if (username == null) {
                                 navigationView.setSelectedItemId(R.id.account_nav);
                                 break;
                             } else {
@@ -74,72 +73,20 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
         );
+    }
 
-
-
-        /*
-        crypto = new Crypto();
-        user = new User();
-        username = "kadekwidi";
-
-        pd = new ProgressDialog(this);
-        pd.setMessage("Loading data...");
-        pd.show();
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                pd.dismiss();
-                crypto.setCrypto(snapshot.child("crypto"));
-
-                // testing
-                System.out.println("===========================");
-                crypto.testPrint();
-                System.out.println("===========================");
-                user.testPrint();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MainActivity.this, "", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        Account account = new Account(getApplication());
-
-        // uji coba login
-        String password = "pa55";
-        databaseReference.child("userid-" + username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                // cek database
-                if (account.isLoggedIn() == null) {
-                    String response = task.getResult().child("password").getValue(String.class);
-                    if (response == null) {
-                        System.out.println("username tidak ada");
-                    } else {
-                        if (response.equals(password)) { // login berhasil
-                            account.login(username);
-                        } else {
-                            System.out.println("login gagal");
-                        }
-                    }
-                } else {
-                    System.out.println("sudah login");
-                }
-            }
-        });
-        account.close();
-
-         */
+    @Override
+    public void recreate() {
+        super.recreate();
+        navigationView.setSelectedItemId(R.id.home_nav);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "resultCode: " + resultCode);
         Log.d(TAG, "requestCode: " + requestCode);
-        if(requestCode == AccountFragment.ACCOUNT_REQ_CODE) {
-            if(resultCode == 1) {
+        if (requestCode == AccountFragment.ACCOUNT_REQ_CODE) {
+            if (resultCode == 1) {
                 setFragment(new AccountFragment());
             }
         }
