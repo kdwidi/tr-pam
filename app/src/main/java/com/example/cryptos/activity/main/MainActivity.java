@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private User user;
     private Crypto crypto;
     private String username;
-    private FragmentTransaction fragmentTransaction;
     BottomNavigationView navigationView;
 
     @SuppressLint("NonConstantResourceId")
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "requestCode: " + requestCode);
         if (requestCode == AccountFragment.ACCOUNT_REQ_CODE) {
             if (resultCode == 1) {
-                setFragment(new AccountFragment());
+                recreate();
             }
         }
     }

@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cryptos.R;
+import com.example.cryptos.activity.about.AboutActivity;
+import com.example.cryptos.activity.about.MapsActivity;
 import com.example.cryptos.activity.account.AccountActivity;
 import com.example.cryptos.activity.main.MainActivity;
 import com.example.cryptos.dao.AccountDatabase;
@@ -84,7 +86,7 @@ public class AccountFragment extends Fragment {
                 }
             });
             AboutBtn.setOnClickListener(v -> {
-
+                startActivity(new Intent(context, AboutActivity.class));
             });
             LogoutBtn.setOnClickListener(v -> {
                 account.logout();
