@@ -3,10 +3,12 @@ package com.example.cryptos.activity.main.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,6 +17,12 @@ import com.example.cryptos.R;
 import com.example.cryptos.activity.account.AccountActivity;
 import com.example.cryptos.activity.main.MainActivity;
 import com.example.cryptos.dao.AccountDatabase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import static android.content.ContentValues.TAG;
 
 public class AccountFragment extends Fragment {
 
@@ -52,7 +60,32 @@ public class AccountFragment extends Fragment {
                             ACCOUNT_REQ_CODE));
         } else {
             view = inflater.inflate(R.layout.fragment_account, container, false);
+            TextView txtName = view.findViewById(R.id.name);
+            TextView txtUsername = view.findViewById(R.id.username);
+            TextView txtNumberphone = view.findViewById(R.id.nohp);
+            TextView txtPassword = view.findViewById(R.id.pass);
+            Button AboutBtn = view.findViewById(R.id.about_btn);
             Button LogoutBtn = view.findViewById(R.id.logout_btn);
+
+            txtUsername.setText(username);
+            FirebaseDatabase.getInstance().getReference("/userid-"+username).getRef().addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                        String name = (String) dataSnapshot.child("name").getValue();
+                        txtName.setText(name);
+                        String numberphone = (String) dataSnapshot.child("telp").getValue();
+                        txtNumberphone.setText(numberphone);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.e(TAG, "Failed to read value.", error.toException());
+                }
+            });
+            AboutBtn.setOnClickListener(v -> {
+
+            });
             LogoutBtn.setOnClickListener(v -> {
                 account.logout();
                 getActivity().recreate();
