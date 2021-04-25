@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
 
     BottomNavigationView navigationView;
+    private AccountDatabase account;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.main_bottom_nav_view);
         navigationView.setBackground(null);
 
+        account = new AccountDatabase(this);
+
         setFragment(new HomeFragment());
 
         navigationView.setOnNavigationItemSelectedListener(item -> {
@@ -47,16 +50,15 @@ public class MainActivity extends AppCompatActivity {
                             setFragment(new HomeFragment());
                             break;
                         case R.id.wallet_nav:
-                            AccountDatabase account = new AccountDatabase(this);
                             String username = account.isLoggedIn();
                             if (username == null) {
                                 navigationView.setSelectedItemId(R.id.account_nav);
                             } else {
-                                setFragment(new WalletFragment());
+                                setFragment(new WalletFragment(username));
                             }
                             break;
                         case R.id.account_nav:
-                            setFragment(new AccountFragment());
+                            setFragment(new AccountFragment(account));
                             break;
                     }
                     return true;
@@ -68,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
     public void recreate() {
         super.recreate();
         navigationView.setSelectedItemId(R.id.home_nav);
+    }
+
+    @Override
+    protected void onDestroy() {
+        account.close();
+        super.onDestroy();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

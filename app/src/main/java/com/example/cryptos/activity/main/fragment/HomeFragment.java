@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -34,19 +35,26 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ListView listView = view.findViewById(R.id.listview);
 
-        FirebaseDatabase.getInstance().getReference("/crypto").get().addOnCompleteListener(task -> {
-            if (!task.isSuccessful()) {
-                Log.e("firebase", "Error getting data", task.getException());
-            } else {
-                ArrayList<Crypto> crypto = new ArrayList<>();
-                task.getResult().getChildren().forEach(coin -> {
-                    Crypto c = new Crypto(coin.getKey(), coin.getValue(Double.class));
-                    crypto.add(c);
-                });
-                CryptoListAdapter adapter = new CryptoListAdapter(context, R.layout.format_listview, crypto);
-                listView.setAdapter(adapter);
-            }
-        });
+        try {
+            FirebaseDatabase.getInstance().getReference("/crypto").get().addOnCompleteListener(task -> {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                } else {
+                    ArrayList<Crypto> crypto = new ArrayList<>();
+                    task.getResult().getChildren().forEach(coin -> {
+                        Crypto c = new Crypto(coin.getKey(), coin.getValue(Double.class));
+                        crypto.add(c);
+                    });
+                    CryptoListAdapter adapter = new CryptoListAdapter(context, R.layout.format_listview, crypto);
+                    listView.setAdapter(adapter);
+                }
+            });
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            Toast.makeText(context,
+                    "Failed contacting server, check your network connection.",
+                    Toast.LENGTH_SHORT).show();
+        }
         return view;
     }
 }

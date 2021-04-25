@@ -44,6 +44,14 @@ public class LoginFragment extends Fragment {
         loginBtn.setOnClickListener(v -> {
             String username = usernameInput.getText().toString();
             String password = passwordInput.getText().toString();
+            if(username.isEmpty()) {
+                usernameInput.requestFocus();
+                return;
+            }
+            if (password.isEmpty()) {
+                passwordInput.requestFocus();
+                return;
+            }
 
             ProgressDialog pd = new ProgressDialog(context);
             pd.setMessage("Logging in...");

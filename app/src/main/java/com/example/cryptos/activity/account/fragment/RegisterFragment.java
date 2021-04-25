@@ -53,6 +53,8 @@ public class RegisterFragment extends Fragment {
 
             if (username.isEmpty()) {
                 usernameInput.requestFocus();
+                Toast.makeText(context,
+                        "Please fill all field corectly.", Toast.LENGTH_SHORT).show();
                 return;
             }
             register(FirebaseDatabase.getInstance().getReference("userid-" + username).get(),
@@ -164,7 +166,7 @@ public class RegisterFragment extends Fragment {
                 } catch (RuntimeExecutionException e) {
                     e.printStackTrace();
                     listener.onCancelled(0,
-                            "Failed contacting server, check your network connection or try again later.",
+                            "Failed contacting server, check your network connection.",
                             null);
                 }
                 if (isTaken[0] != null) {

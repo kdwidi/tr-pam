@@ -29,8 +29,10 @@ import static android.content.ContentValues.TAG;
 public class AccountFragment extends Fragment {
 
     public static int ACCOUNT_REQ_CODE = 101;
+    private AccountDatabase account;
 
-    public AccountFragment() {
+    public AccountFragment(AccountDatabase account) {
+        this.account = account;
     }
 
     @Override
@@ -43,9 +45,7 @@ public class AccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         Context context = getActivity().getApplicationContext();
         View view;
-        AccountDatabase account = new AccountDatabase(context);
         String username = account.isLoggedIn();
-        System.out.println("Username: " + username);
         if (username == null) {
             view = inflater.inflate(
                     R.layout.fragment_account_req_login, container, false);
@@ -65,7 +65,6 @@ public class AccountFragment extends Fragment {
             TextView txtName = view.findViewById(R.id.name);
             TextView txtUsername = view.findViewById(R.id.username);
             TextView txtNumberphone = view.findViewById(R.id.nohp);
-            TextView txtPassword = view.findViewById(R.id.pass);
             Button AboutBtn = view.findViewById(R.id.about_btn);
             Button LogoutBtn = view.findViewById(R.id.logout_btn);
 
@@ -81,7 +80,6 @@ public class AccountFragment extends Fragment {
 
                 @Override
                 public void onCancelled(DatabaseError error) {
-                    // Failed to read value
                     Log.e(TAG, "Failed to read value.", error.toException());
                 }
             });
