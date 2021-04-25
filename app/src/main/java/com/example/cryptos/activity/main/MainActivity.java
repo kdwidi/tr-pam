@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                             if (username == null) {
                                 navigationView.setSelectedItemId(R.id.account_nav);
                             } else {
-                                setFragment(new WalletFragment(username));
+                                setFragment(new WalletFragment());
                             }
                             break;
                         case R.id.account_nav:

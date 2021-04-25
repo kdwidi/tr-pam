@@ -72,10 +72,10 @@ public class AccountFragment extends Fragment {
             FirebaseDatabase.getInstance().getReference("/userid-"+username).getRef().addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                        String name = (String) dataSnapshot.child("name").getValue();
-                        txtName.setText(name);
-                        String numberphone = (String) dataSnapshot.child("telp").getValue();
-                        txtNumberphone.setText(numberphone);
+                    String name = (String) dataSnapshot.child("name").getValue();
+                    txtName.setText(name);
+                    String numberphone = (String) dataSnapshot.child("telp").getValue();
+                    txtNumberphone.setText(numberphone);
                 }
 
                 @Override
