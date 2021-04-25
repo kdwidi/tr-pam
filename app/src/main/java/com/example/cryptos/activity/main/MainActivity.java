@@ -26,11 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
 
-    private ProgressDialog pd;
-    private final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    private User user;
-    private Crypto crypto;
-    private String username;
     BottomNavigationView navigationView;
 
     @SuppressLint("NonConstantResourceId")
@@ -56,11 +51,10 @@ public class MainActivity extends AppCompatActivity {
                             String username = account.isLoggedIn();
                             if (username == null) {
                                 navigationView.setSelectedItemId(R.id.account_nav);
-                                break;
                             } else {
                                 setFragment(new WalletFragment());
-                                break;
                             }
+                            break;
                         case R.id.account_nav:
                             setFragment(new AccountFragment());
                             break;

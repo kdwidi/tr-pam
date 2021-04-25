@@ -1,23 +1,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="100">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
 
     <TextView
-        android:id="@+id/txtListView1"
+        android:id="@+id/lv_crypto_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="50"
-        />
+        android:layout_weight="1"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/txtListView2"
+        android:id="@+id/lv_crypto_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="50"
+        android:layout_gravity="center"
+        android:layout_weight="1"
         android:textAlignment="textEnd"
-        />
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
 </LinearLayout>

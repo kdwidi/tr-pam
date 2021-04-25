@@ -1,15 +1,10 @@
 package com.example.cryptos.model;
 
-import com.google.firebase.database.DataSnapshot;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public  class Crypto {
-    private String name;
-    private String price;
+    private final String name;
+    private final double price;
 
-    public Crypto(String name, String price) {
+    public Crypto(String name, double price) {
         this.name = name;
         this.price = price;
     }
@@ -18,16 +13,8 @@ public  class Crypto {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPrice() {
+    public double getPrice() {
         return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
     }
 }
 
