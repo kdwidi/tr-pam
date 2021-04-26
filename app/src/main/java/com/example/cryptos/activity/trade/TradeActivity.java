@@ -26,8 +26,7 @@ public class TradeActivity extends AppCompatActivity {
     TextView coin_name, coin_price, total_saldo;
     Button btn_sell, btn_buy;
     EditText total_idr_buy, total_idr_sell;
-    int doge = 5000, coin_doge = 5;
-    int t_saldo, t_coin;
+    Integer t_saldo, t_coin;
 
 
     @Override
@@ -90,7 +89,7 @@ public class TradeActivity extends AppCompatActivity {
             double total_saldo;
             System.out.println("aaaa = " + t_coin);
 
-            if (t_coin != 0) {
+            if (t_coin != null) {
 
                 total_saldo = total_buy + t_coin;
                 System.out.println(total_saldo);

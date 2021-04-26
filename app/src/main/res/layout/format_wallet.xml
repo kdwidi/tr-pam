@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp"
+    android:padding="8dp"
     android:weightSum="2">
 
     <TextView
@@ -11,28 +11,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:gravity="center_vertical"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/lv_wallet_crypto_balance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
             android:textAlignment="textEnd"
             android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-        <TextView
-            android:id="@+id/lv_wallet_crypto_balance_in_idr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="textEnd"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:layout_below="@+id/lv_wallet_crypto_balance"/>
-    </RelativeLayout>
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
 </LinearLayout>

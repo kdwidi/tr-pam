@@ -34,23 +34,17 @@ public class WalletListAdapter extends ArrayAdapter<Wallet> {
 
         TextView nameTextView = convertView.findViewById(R.id.lv_wallet_crypto_name);
         TextView balanceTextView = convertView.findViewById(R.id.lv_wallet_crypto_balance);
-        TextView balanceinIdrTextView = convertView.findViewById(R.id.lv_wallet_crypto_balance_in_idr);
 
         nameTextView.setText(getItem(position).getName().toUpperCase());
-        if(!getItem(position).getName().equals("IDR")) {
-            balanceTextView.setText(formatToString(getItem(position).getCryptobalance()));
-            balanceinIdrTextView.setText(formatToIDR(getItem(position).getIdrbalance()));
+        if (!getItem(position).getName().equals("IDR")) {
+            String balanceTxt = getItem(position).getCryptobalance() + "\n\n" + formatToIDR(getItem(position).getIdrbalance());
+            balanceTextView.setText(balanceTxt);
         } else {
-            balanceTextView.setText(formatToIDR(getItem(position).getIdrbalance()));
+            String balanceTxt = "\n" + formatToIDR(getItem(position).getIdrbalance()) + "\n";
+            balanceTextView.setText(balanceTxt);
         }
 
-
         return convertView;
-    }
-
-    public String formatToString(double cryptobalance) {
-        @SuppressLint("DefaultLocale") String p = Double.toString(cryptobalance);
-        return p;
     }
 
     public String formatToIDR(double balance) {

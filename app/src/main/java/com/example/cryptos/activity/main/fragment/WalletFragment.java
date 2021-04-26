@@ -4,11 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,6 +30,8 @@ public class WalletFragment extends Fragment {
     private ArrayList<Double> price = new ArrayList<>();
     private ArrayList<String> crypt = new ArrayList<>();
     private double totalbalance;
+    private WalletListAdapter adapter;
+
     public WalletFragment() {
     }
 
@@ -45,38 +45,37 @@ public class WalletFragment extends Fragment {
                              Bundle savedInstanceState) {
         Context context = getActivity().getApplicationContext();
         View view = inflater.inflate(R.layout.fragment_wallet, container, false);
-        TextView balancetextView = view.findViewById(R.id.balanceIdr);
-        Button depowdButton = view.findViewById(R.id.depowd);
+        TextView estimationTextView = view.findViewById(R.id.estimation_idr);
         ListView listView = view.findViewById(R.id.listwallet);
 
         AccountDatabase account = new AccountDatabase(context);
         String username = account.isLoggedIn();
 
-        getprice();
-        FirebaseDatabase.getInstance().getReference("/userid-"+username).child("wallet").addValueEventListener(new ValueEventListener() {
+        getPrice();
+        FirebaseDatabase.getInstance().getReference("/userid-" + username).child("wallet").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Wallet> wallet = new ArrayList<>();
                 int intidr = snapshot.child("idr").getValue(Integer.class);
                 double doubleidr = snapshot.child("idr").getValue(Double.class);
-                Wallet idr = new Wallet("IDR",doubleidr,intidr);
+                Wallet idr = new Wallet("IDR", doubleidr, intidr);
                 wallet.add(idr);
-                totalbalance =intidr;
-                for (DataSnapshot dt: snapshot.getChildren()) {
+                totalbalance = intidr;
+                for (DataSnapshot dt : snapshot.getChildren()) {
                     int si = crypt.size();
-                    for (int a =0; a<=si-1;a++) {
+                    for (int a = 0; a <= si - 1; a++) {
                         if (dt.getKey().equals(crypt.get(a))) {
                             double bal = dt.getValue(Double.class);
-                            double est= bal * price.get(a);
-                            Wallet c = new Wallet(dt.getKey(), dt.getValue(Double.class),est);
-                            System.out.println("iki est : "+String.format("%.0f",est));
+                            double est = bal * price.get(a);
+                            Wallet c = new Wallet(dt.getKey(), dt.getValue(Double.class), est);
                             wallet.add(c);
-                            totalbalance+=est;
+                            totalbalance += est;
                         }
                     }
                 }
-                balancetextView.setText("Total Balance \n"+formatToIDR(totalbalance));
-                WalletListAdapter adapter = new WalletListAdapter(context, R.layout.format_wallet, wallet);
+                String estimationStr = "\nEstimation IDR\n\n" + formatToIDR(totalbalance) + "\n";
+                estimationTextView.setText(estimationStr);
+                adapter = new WalletListAdapter(context, R.layout.format_wallet, wallet);
                 listView.setAdapter(adapter);
             }
 
@@ -86,19 +85,21 @@ public class WalletFragment extends Fragment {
             }
         });
 
-        depowdButton.setOnClickListener(v ->
+        listView.setOnItemClickListener((parent, view1, position, id) -> {
+            if (position == 0)
                 startActivity(
                         new Intent(context, IdrActivity.class)
-                                .putExtra("username", username))
-        );
+                                .putExtra("username", username));
+        });
         return view;
     }
-    public void getprice(){
+
+    public void getPrice() {
         FirebaseDatabase.getInstance().getReference("/crypto").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 price.clear();
-                for (DataSnapshot dt: snapshot.getChildren()) {
+                for (DataSnapshot dt : snapshot.getChildren()) {
                     price.add(dt.getValue(Double.class));
                     crypt.add(dt.getKey());
                 }
@@ -110,6 +111,7 @@ public class WalletFragment extends Fragment {
             }
         });
     }
+
     public String formatToIDR(double balance) {
         @SuppressLint("DefaultLocale") String p = String.format("%.0f", balance);
         String formated = "";
