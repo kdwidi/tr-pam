@@ -62,7 +62,7 @@ public class WalletFragment extends Fragment {
                 totalbalance = doubleidr;
                 for (DataSnapshot dt : snapshot.getChildren()) {
                     int si = crypt.size();
-                    for (int a = 0; a <= si - 1; a++) {
+                    for (int a = 0; a < si; a++) {
                         if (dt.getKey().equals(crypt.get(a))) {
                             double bal = dt.getValue(Double.class);
                             double est = bal * price.get(a);
@@ -98,6 +98,7 @@ public class WalletFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 price.clear();
+                crypt.clear();
                 for (DataSnapshot dt : snapshot.getChildren()) {
                     price.add(dt.getValue(Double.class));
                     crypt.add(dt.getKey());

@@ -136,6 +136,7 @@ public class TradeActivity extends AppCompatActivity {
         coin_price.setText(formatToIDR(price));
         FirebaseDatabase.getInstance().getReference("/userid-" + username)
                 .child("wallet").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("DefaultLocale")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 t_balance = snapshot.child("idr").getValue(Double.class);
@@ -148,7 +149,7 @@ public class TradeActivity extends AppCompatActivity {
                         t_coin = 0;
                     }
                 }
-                balance_coin.setText(t_coin + "");
+                balance_coin.setText(String.format("%.9f", t_coin));
             }
 
             @Override
@@ -229,6 +230,7 @@ public class TradeActivity extends AppCompatActivity {
                 return;
 
             }
+            System.out.println("Total saldo: "+total_saldo);
             FirebaseDatabase.getInstance().getReference("/userid-" + username + "/wallet/" + coin)
                     .setValue(total_saldo);
             FirebaseDatabase.getInstance().getReference("/userid-" + username + "/wallet/" + "idr")

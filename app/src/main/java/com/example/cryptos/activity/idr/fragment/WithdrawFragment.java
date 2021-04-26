@@ -46,12 +46,12 @@ public class WithdrawFragment extends Fragment {
             }
             if (!wdAccount.getText().toString().isEmpty()) {
                 double amount = Double.parseDouble(wdAmount.getText().toString());
-                if(amount < 25000f) {
+                if (amount < 25000f) {
                     Toast.makeText(context, "Minimal withdraw amount is Rp. 25.000", Toast.LENGTH_SHORT).show();
                     wdAmount.requestFocus();
                     return;
                 }
-                if (balance > amount)
+                if (balance >= amount)
                     try {
                         FirebaseDatabase.getInstance().getReference(idrPath).setValue(balance - amount);
                         Toast.makeText(context, "Withdraw success.", Toast.LENGTH_SHORT).show();

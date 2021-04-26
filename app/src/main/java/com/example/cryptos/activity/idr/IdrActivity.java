@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cryptos.R;
 import com.example.cryptos.activity.idr.fragment.DepositFragment;
@@ -80,10 +82,11 @@ public class IdrActivity extends AppCompatActivity {
         Fragment fragment;
         if (selectedTab == 0) fragment = new DepositFragment(IDR_PATH, balance);
         else fragment = new WithdrawFragment(IDR_PATH, balance);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.idr_frame_layout, fragment)
-                .commit();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.idr_frame_layout, fragment);
+        if (!fm.isDestroyed())
+            ft.commit();
 
     }
 

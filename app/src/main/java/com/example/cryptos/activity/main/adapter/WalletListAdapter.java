@@ -37,7 +37,9 @@ public class WalletListAdapter extends ArrayAdapter<Wallet> {
 
         nameTextView.setText(getItem(position).getName().toUpperCase());
         if (!getItem(position).getName().equals("IDR")) {
-            String balanceTxt = getItem(position).getCryptobalance() + "\n\n" + formatToIDR(getItem(position).getIdrbalance());
+            @SuppressLint("DefaultLocale") String balanceTxt =
+                    String.format("%.9f", getItem(position).getCryptobalance())
+                            + "\n\n" + formatToIDR(getItem(position).getIdrbalance());
             balanceTextView.setText(balanceTxt);
         } else {
             String balanceTxt = "\n" + formatToIDR(getItem(position).getIdrbalance()) + "\n";

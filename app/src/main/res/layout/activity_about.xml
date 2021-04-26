@@ -34,10 +34,11 @@
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="144dp"
+                android:layout_width="196dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Address" />
+                android:text="Address"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:id="@+id/about_address_linear_layout"
@@ -54,13 +55,14 @@
                     android:layout_weight="1"
                     android:text="St. Kemiri Raya, Salatiga, Central Java, Indonesia, 50711"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="12"
+                    android:layout_weight="10"
                     app:srcCompat="@drawable/ic_location_on"
                     app:tint="#5603CD" />
 
@@ -78,7 +80,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Telp" />
+                android:text="Telp"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:id="@+id/about_telp_linear_layout"
@@ -95,13 +98,14 @@
                     android:layout_weight="1"
                     android:text="+626262"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/imageView12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="12"
+                    android:layout_weight="10"
                     app:srcCompat="@drawable/ic_call"
                     app:tint="#5603CD" />
             </LinearLayout>
@@ -118,7 +122,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Email" />
+                android:text="Email"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:id="@+id/about_email_linear_layout"
@@ -135,13 +140,14 @@
                     android:layout_weight="1"
                     android:text="support@cryptos.in"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="12"
+                    android:layout_weight="10"
                     app:srcCompat="@drawable/ic_email"
                     app:tint="#5603CD" />
             </LinearLayout>
@@ -153,11 +159,12 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="App build" />
+                android:text="App build"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -172,7 +179,8 @@
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
