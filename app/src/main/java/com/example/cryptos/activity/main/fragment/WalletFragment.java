@@ -56,11 +56,10 @@ public class WalletFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Wallet> wallet = new ArrayList<>();
-                int intidr = snapshot.child("idr").getValue(Integer.class);
                 double doubleidr = snapshot.child("idr").getValue(Double.class);
-                Wallet idr = new Wallet("IDR", doubleidr, intidr);
+                Wallet idr = new Wallet("IDR", doubleidr, doubleidr);
                 wallet.add(idr);
-                totalbalance = intidr;
+                totalbalance = doubleidr;
                 for (DataSnapshot dt : snapshot.getChildren()) {
                     int si = crypt.size();
                     for (int a = 0; a <= si - 1; a++) {

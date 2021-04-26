@@ -30,9 +30,7 @@ public class TradeActivity extends AppCompatActivity {
     TextView coin_name, coin_price, total_balance, balance_coin;
     Button btn_sell, btn_buy;
     EditText total_idr_buy, total_idr_sell;
-    Integer balance_after_tf;
-    Double t_coin;
-    int t_balance;
+    double t_coin,t_balance,balance_after_tf;
 
 
     @Override
@@ -140,11 +138,17 @@ public class TradeActivity extends AppCompatActivity {
                 .child("wallet").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                t_balance = snapshot.child("idr").getValue(Integer.class);
+                t_balance = snapshot.child("idr").getValue(Double.class);
                 total_balance.setText(formatToIDR(t_balance));
-                t_coin = snapshot.child(coin).getValue(Double.class);
+                for (DataSnapshot crypto: snapshot.getChildren()) {
+                    if(crypto.getKey().equals(coin)) {
+                        t_coin = crypto.getValue(Double.class);
+                        break;
+                    } else {
+                        t_coin = 0;
+                    }
+                }
                 balance_coin.setText(t_coin + "");
-
             }
 
             @Override
@@ -172,7 +176,7 @@ public class TradeActivity extends AppCompatActivity {
             double total_coin_buy;
             System.out.println("aaaa = " + t_coin);
 
-            if (t_coin != null) {
+            if (t_coin != 0) {
 
                 total_coin_buy = total_buy + t_coin;
                 System.out.println(total_balance);
