@@ -4,9 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <LinearLayout
-        android:layout_width="40dp"
-        android:layout_height="40dp">
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="75dp"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:text="Saldo :" />
+
+        <TextView
+            android:id="@+id/saldo"
+            android:layout_width="wrap_content"
+            android:layout_height="75dp"/>
 
 
     </LinearLayout>
@@ -14,49 +28,66 @@
 
     <TextView
         android:id="@+id/coin_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textSize="30dp"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/coin_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textSize="30dp"
         android:text="TextView" />
-
-    <EditText
-        android:id="@+id/total_idr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btn_buy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Buy" />
-
-    <Button
-        android:id="@+id/btn_sell"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sell" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:orientation="horizontal">
+        android:layout_height="75dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <EditText
-            android:id="@+id/coin_total"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1" />
+            android:id="@+id/total_idr_buy"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="right"/>
+
+        <Button
+            android:id="@+id/btn_buy"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Buy" />
+
 
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/buy_container"
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="75dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <EditText
+            android:id="@+id/total_idr_sell"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_sell"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Sell"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>
