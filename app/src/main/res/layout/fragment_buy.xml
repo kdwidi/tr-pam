@@ -6,9 +6,32 @@
     tools:context=".activity.trade.fragment.BuyFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Fragment Buy" />
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14pt"
+            android:id="@+id/a1"
+            android:text="1"
+            android:onClick="1"
+            android:clickable="true"
+            tools:ignore="OnClick" />
+        <TextView
+            android:id="@+id/a2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="2" />
+        <TextView
+            android:id="@+id/a3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="3" />
+
+    </LinearLayout>
+
 
 </FrameLayout>

@@ -1,6 +1,7 @@
 package com.example.cryptos.activity.main.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cryptos.R;
 import com.example.cryptos.activity.main.adapter.CryptoListAdapter;
+import com.example.cryptos.activity.trade.TradeActivity;
 import com.example.cryptos.model.Crypto;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -47,6 +49,22 @@ public class HomeFragment extends Fragment {
                     });
                     CryptoListAdapter adapter = new CryptoListAdapter(context, R.layout.format_listview, crypto);
                     listView.setAdapter(adapter);
+
+                    listView.setOnItemClickListener((parent, view1, position, id) -> {
+                        Intent intent = new Intent(context, TradeActivity.class);
+                        String name = crypto.get(position).getName();
+                        Double price = crypto.get(position).getPrice();
+
+                        intent.putExtra("Name", name);
+                        intent.putExtra("Price", price);
+                        startActivity(intent);
+
+                    });
+
+
+
+
+
                 }
             });
         } catch (Exception e) {
