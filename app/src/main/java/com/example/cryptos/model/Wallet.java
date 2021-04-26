@@ -3,9 +3,9 @@ package com.example.cryptos.model;
 public class Wallet {
     private final String name;
     private final double cryptobalance;
-    private final int idrbalance;
+    private final double idrbalance;
 
-    public Wallet(String name, double cryptobalance, int idrbalance) {
+    public Wallet(String name, double cryptobalance, double idrbalance) {
         this.name = name;
         this.cryptobalance = cryptobalance;
         this.idrbalance = idrbalance;
@@ -19,7 +19,7 @@ public class Wallet {
         return cryptobalance;
     }
 
-    public int getIdrbalance() {
+    public double getIdrbalance() {
         return idrbalance;
     }
 }

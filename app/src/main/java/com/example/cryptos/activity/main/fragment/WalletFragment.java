@@ -29,9 +29,9 @@ import java.util.ArrayList;
 
 public class WalletFragment extends Fragment {
 
-    private ArrayList<Integer> price = new ArrayList<>();
+    private ArrayList<Double> price = new ArrayList<>();
     private ArrayList<String> crypt = new ArrayList<>();
-    private long totalbalance;
+    private double totalbalance;
     public WalletFragment() {
     }
 
@@ -53,34 +53,39 @@ public class WalletFragment extends Fragment {
         String username = account.isLoggedIn();
 
         getprice();
-        FirebaseDatabase.getInstance().getReference("/userid-"+username).child("wallet").get().addOnCompleteListener(task -> {
-            if (!task.isSuccessful()) {
-                Log.e("firebase", "Error getting data", task.getException());
-            } else {
+        FirebaseDatabase.getInstance().getReference("/userid-"+username).child("wallet").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Wallet> wallet = new ArrayList<>();
-                int intidr = task.getResult().child("idr").getValue(Integer.class);
-                double doubleidr = task.getResult().child("idr").getValue(Double.class);
+                int intidr = snapshot.child("idr").getValue(Integer.class);
+                double doubleidr = snapshot.child("idr").getValue(Double.class);
                 Wallet idr = new Wallet("IDR",doubleidr,intidr);
                 wallet.add(idr);
                 totalbalance =intidr;
-                task.getResult().getChildren().forEach(coin -> {
+                for (DataSnapshot dt: snapshot.getChildren()) {
                     int si = crypt.size();
                     for (int a =0; a<=si-1;a++) {
-                        if (coin.getKey().equals(crypt.get(a))) {
-                            double bal = coin.getValue(Double.class);
-                            int bala = (int) bal;
-                            int est= bala * price.get(a);
-                            Wallet c = new Wallet(coin.getKey(), coin.getValue(Double.class),est);
+                        if (dt.getKey().equals(crypt.get(a))) {
+                            double bal = dt.getValue(Double.class);
+                            double est= bal * price.get(a);
+                            Wallet c = new Wallet(dt.getKey(), dt.getValue(Double.class),est);
+                            System.out.println("iki est : "+String.format("%.0f",est));
                             wallet.add(c);
                             totalbalance+=est;
                         }
                     }
-                });
+                }
                 balancetextView.setText("Total Balance \n"+formatToIDR(totalbalance));
                 WalletListAdapter adapter = new WalletListAdapter(context, R.layout.format_wallet, wallet);
                 listView.setAdapter(adapter);
             }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
+
         depowdButton.setOnClickListener(v ->
                 startActivity(
                         new Intent(context, IdrActivity.class)
@@ -94,7 +99,7 @@ public class WalletFragment extends Fragment {
             public void onDataChange(DataSnapshot snapshot) {
                 price.clear();
                 for (DataSnapshot dt: snapshot.getChildren()) {
-                    price.add(Integer.parseInt(dt.getValue().toString()));
+                    price.add(dt.getValue(Double.class));
                     crypt.add(dt.getKey());
                 }
             }
@@ -105,8 +110,8 @@ public class WalletFragment extends Fragment {
             }
         });
     }
-    public String formatToIDR(long estidr) {
-        @SuppressLint("DefaultLocale") String p = String.valueOf(estidr);
+    public String formatToIDR(double balance) {
+        @SuppressLint("DefaultLocale") String p = String.format("%.0f", balance);
         String formated = "";
         for (int i = p.length() - 1, j = 0; i >= 0; i--, j++) {
             if (j % 3 == 0 && i != p.length() - 1)

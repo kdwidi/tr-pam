@@ -54,7 +54,7 @@
                     android:layout_weight="1"
                     android:text="St. Kemiri Raya, Salatiga, Central Java, Indonesia, 50711"
                     android:textAlignment="textEnd"
-                    android:textColor="#5603CD" />
+                    android:textColor="@color/white" />
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -95,7 +95,7 @@
                     android:layout_weight="1"
                     android:text="+626262"
                     android:textAlignment="textEnd"
-                    android:textColor="#5603CD" />
+                    android:textColor="@color/white" />
 
                 <ImageView
                     android:id="@+id/imageView12"
@@ -135,7 +135,7 @@
                     android:layout_weight="1"
                     android:text="support@cryptos.in"
                     android:textAlignment="textEnd"
-                    android:textColor="#5603CD" />
+                    android:textColor="@color/white" />
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -172,7 +172,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:textAlignment="textEnd"
-                    android:textColor="#5603CD" />
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
