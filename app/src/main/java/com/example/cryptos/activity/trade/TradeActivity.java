@@ -64,28 +64,30 @@ public class TradeActivity extends AppCompatActivity {
         coin_price.setText(formatToIDR(price));
         coin_sell.setText(coin.toUpperCase());
 
-        FirebaseDatabase.getInstance().getReference("/userid-" + username)
-                .child("wallet").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                t_balance = snapshot.child("idr").getValue(Double.class);
-                total_balance.setText(formatToIDR(t_balance));
-                for (DataSnapshot crypto: snapshot.getChildren()) {
-                    if(crypto.getKey().equals(coin)) {
-                        t_coin = crypto.getValue(Double.class);
-                        break;
-                    } else {
-                        t_coin = 0;
+        if(username != null) {
+            FirebaseDatabase.getInstance().getReference("/userid-" + username)
+                    .child("wallet").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    t_balance = snapshot.child("idr").getValue(Double.class);
+                    total_balance.setText(formatToIDR(t_balance));
+                    for (DataSnapshot crypto : snapshot.getChildren()) {
+                        if (crypto.getKey().equals(coin)) {
+                            t_coin = crypto.getValue(Double.class);
+                            break;
+                        } else {
+                            t_coin = 0;
+                        }
                     }
+                    balance_coin.setText(t_coin + "");
                 }
-                balance_coin.setText(t_coin + "");
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
 
         total_idr_buy.addTextChangedListener(new TextWatcher() {
             @Override
