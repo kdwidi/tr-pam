@@ -102,7 +102,7 @@ public class TradeActivity extends AppCompatActivity {
 
                     DecimalFormat df =  new DecimalFormat("#0.00000000");
 
-                    est_coin.setText("BTC "+df.format(est_buy)+"");
+                    est_coin.setText(coin+" "+df.format(est_buy)+"");
                 } else {
                     est_coin.setText("");
                 }
