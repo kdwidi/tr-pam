@@ -27,10 +27,10 @@ import java.util.Locale;
 
 public class TradeActivity extends AppCompatActivity {
 
-    TextView coin_name, coin_price, total_balance, balance_coin;
+    TextView coin_name, coin_price, total_balance, balance_coin, coin_sell,est_idr,est_coin;
     Button btn_sell, btn_buy;
-    EditText total_idr_buy, total_idr_sell;
-    double t_coin,t_balance,balance_after_tf;
+    EditText total_idr_buy, total_coin_sell;
+    double t_coin,t_balance,balance_after_tf,est_sell,est_buy;
 
 
     @Override
@@ -43,16 +43,50 @@ public class TradeActivity extends AppCompatActivity {
         AccountDatabase account = new AccountDatabase(context);
         String username = account.isLoggedIn();
 
-
         coin_name = findViewById(R.id.coin_name);
         coin_price = findViewById(R.id.coin_price);
         total_idr_buy = findViewById(R.id.total_idr_buy);
-        total_idr_sell = findViewById(R.id.total_idr_sell);
+        total_coin_sell = findViewById(R.id.total_coin_sell);
         total_balance = findViewById(R.id.balance);
         balance_coin = findViewById(R.id.balance_coin);
-
+        coin_sell = findViewById(R.id.coin_sell);
+        est_coin = findViewById(R.id.est_coin);
+        est_idr = findViewById(R.id.est_idr);
         btn_buy = findViewById(R.id.btn_buy);
         btn_sell = findViewById(R.id.btn_sell);
+
+        Intent intent = getIntent();
+        String coin = intent.getStringExtra("Name");
+        Double price = intent.getDoubleExtra("Price", 0.00);
+        System.out.println(coin);
+        System.out.println(price);
+        coin_name.setText(coin.toUpperCase());
+        coin_price.setText(formatToIDR(price));
+        coin_sell.setText(coin.toUpperCase());
+
+        FirebaseDatabase.getInstance().getReference("/userid-" + username)
+                .child("wallet").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                t_balance = snapshot.child("idr").getValue(Double.class);
+                total_balance.setText(formatToIDR(t_balance));
+                for (DataSnapshot crypto: snapshot.getChildren()) {
+                    if(crypto.getKey().equals(coin)) {
+                        t_coin = crypto.getValue(Double.class);
+                        break;
+                    } else {
+                        t_coin = 0;
+                    }
+                }
+                balance_coin.setText(t_coin + "");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         total_idr_buy.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -61,7 +95,17 @@ public class TradeActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int textlength = total_idr_buy.getText().length();
+                if(textlength != 0) {
+                    double idr_b = Double.parseDouble(total_idr_buy.getText().toString().replace(",", ""));
+                    est_buy = idr_b / price;
 
+                    DecimalFormat df =  new DecimalFormat("#0.00000000");
+
+                    est_coin.setText("BTC "+df.format(est_buy)+"");
+                } else {
+                    est_coin.setText("");
+                }
             }
 
             @Override
@@ -89,7 +133,7 @@ public class TradeActivity extends AppCompatActivity {
                 total_idr_buy.addTextChangedListener(this);
             }
         });
-        total_idr_sell.addTextChangedListener(new TextWatcher() {
+        total_coin_sell.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -97,12 +141,20 @@ public class TradeActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int textlength = total_coin_sell.getText().length();
+                if(textlength != 0) {
+                    double coin_s = Double.parseDouble(total_coin_sell.getText().toString().replace(",", ""));
+                    est_sell = coin_s * price;
 
+                    est_idr.setText(formatToIDR(est_sell) + "");
+                } else {
+                    est_idr.setText("");
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                total_idr_sell.removeTextChangedListener(this);
+                total_coin_sell.removeTextChangedListener(this);
 
                 try {
                     String awal = s.toString();
@@ -116,47 +168,19 @@ public class TradeActivity extends AppCompatActivity {
                     pattern.applyPattern("#,###,###,###");
                     String formattedString = pattern.format(akhir);
 
-                    total_idr_sell.setText(formattedString);
-                    total_idr_sell.setSelection(total_idr_sell.getText().length());
+                    total_coin_sell.setText(formattedString);
+                    total_coin_sell.setSelection(total_coin_sell.getText().length());
+
                 } catch (NumberFormatException nfe) {
                     nfe.printStackTrace();
                 }
 
-                total_idr_sell.addTextChangedListener(this);
+                total_coin_sell.addTextChangedListener(this);
             }
         });
 
 
-        Intent intent = getIntent();
-        String coin = intent.getStringExtra("Name");
-        Double price = intent.getDoubleExtra("Price", 0.00);
-        System.out.println(coin);
-        System.out.println(price);
-        coin_name.setText(coin.toUpperCase());
-        coin_price.setText(formatToIDR(price));
-        FirebaseDatabase.getInstance().getReference("/userid-" + username)
-                .child("wallet").addValueEventListener(new ValueEventListener() {
-            @SuppressLint("DefaultLocale")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                t_balance = snapshot.child("idr").getValue(Double.class);
-                total_balance.setText(formatToIDR(t_balance));
-                for (DataSnapshot crypto: snapshot.getChildren()) {
-                    if(crypto.getKey().equals(coin)) {
-                        t_coin = crypto.getValue(Double.class);
-                        break;
-                    } else {
-                        t_coin = 0;
-                    }
-                }
-                balance_coin.setText(String.format("%.9f", t_coin));
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
         btn_buy.setOnClickListener(v -> {
@@ -173,56 +197,49 @@ public class TradeActivity extends AppCompatActivity {
                 Toast.makeText(context, "Insufficient Balance", Toast.LENGTH_SHORT).show();
                 return;
             }
+
             double total_buy = idr_buy / price;
             double total_coin_buy;
-            System.out.println("aaaa = " + t_coin);
 
             if (t_coin != 0) {
-
                 total_coin_buy = total_buy + t_coin;
-                System.out.println(total_balance);
-                System.out.println(total_buy);
-                System.out.println(t_coin);
-
-
             } else {
                 total_coin_buy = total_buy;
-                System.out.println(total_coin_buy);
-
             }
+
             FirebaseDatabase.getInstance().getReference("/userid-" + username + "/wallet/" + coin)
                     .setValue(total_coin_buy);
             FirebaseDatabase.getInstance().getReference("/userid-" + username + "/wallet/" + "idr")
                     .setValue(balance_after_tf);
             Toast.makeText(context, "Transaction Succesfull", Toast.LENGTH_SHORT).show();
-
+            total_idr_buy.setText("");
         });
 
 
         btn_sell.setOnClickListener(v -> {
 
 
-            if (total_idr_sell.getText().toString().isEmpty()) {
+            if (total_coin_sell.getText().toString().isEmpty()) {
                 Toast.makeText(context,
                         "Invalid input!", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Integer idr_sell = Integer.parseInt(total_idr_sell.getText().toString().replace(",", ""));
-            balance_after_tf = t_balance - idr_sell;
-            System.out.println(idr_sell);
-            double total_sell = idr_sell / price;
+            double coin_sell = Double.parseDouble(total_coin_sell.getText().toString().replace(",", ""));
+            est_sell = coin_sell*price;
+
+            balance_after_tf = t_balance + est_sell;
 
 
             double total_saldo;
             System.out.println("aaaa = " + t_coin);
 
             if (t_coin != 0) {
-                if (t_coin < total_sell) {
+                if (t_coin < coin_sell) {
                     Toast.makeText(context, "Insuficient Balance", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                total_saldo = t_coin - total_sell;
+                total_saldo = t_coin - coin_sell;
 
 
             } else {
@@ -230,13 +247,12 @@ public class TradeActivity extends AppCompatActivity {
                 return;
 
             }
-            System.out.println("Total saldo: "+total_saldo);
             FirebaseDatabase.getInstance().getReference("/userid-" + username + "/wallet/" + coin)
                     .setValue(total_saldo);
             FirebaseDatabase.getInstance().getReference("/userid-" + username + "/wallet/" + "idr")
                     .setValue(balance_after_tf);
             Toast.makeText(context, "Transaction Succesfull", Toast.LENGTH_SHORT).show();
-
+            total_coin_sell.setText("");
         });
 
 

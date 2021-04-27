@@ -5,14 +5,10 @@
     android:orientation="vertical"
     android:layout_margin="10dp">
 
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="250dp"
@@ -71,18 +67,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:orientation="horizontal"
-        android:weightSum="10"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
         android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp">
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:gravity="center"
             android:layout_weight="9"
-            android:text="Rp."/>
+            android:gravity="center"
+            android:text="Rp." />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,9 +90,9 @@
                 android:id="@+id/total_idr_buy"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:inputType="numberDecimal"
                 android:layout_weight="1"
-                android:gravity="right"/>
+                android:gravity="right"
+                android:inputType="numberDecimal" />
 
             <Button
                 android:id="@+id/btn_buy"
@@ -104,25 +101,32 @@
                 android:layout_weight="1"
                 android:text="Buy" />
         </LinearLayout>
+
     </LinearLayout>
 
-
+    <TextView
+        android:id="@+id/est_coin"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="70dp"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:orientation="horizontal"
-        android:weightSum="10"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp">
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <TextView
+            android:id="@+id/coin_sell"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:gravity="center"
             android:layout_weight="9"
-            android:text="Rp. "/>
+            android:gravity="center"
+            android:text="" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -130,12 +134,12 @@
             android:layout_weight="1">
 
             <EditText
-                android:id="@+id/total_idr_sell"
+                android:id="@+id/total_coin_sell"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:inputType="numberDecimal"
                 android:layout_weight="1"
-                android:gravity="right"/>
+                android:gravity="right"
+                android:inputType="numberDecimal" />
 
             <Button
                 android:id="@+id/btn_sell"
@@ -144,7 +148,13 @@
                 android:layout_weight="1"
                 android:text="Sell" />
         </LinearLayout>
+
     </LinearLayout>
+    <TextView
+        android:id="@+id/est_idr"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="70dp"/>
 
 
 </LinearLayout>
