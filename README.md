@@ -7,3 +7,8 @@
 1. Yogi Ardiansyah - 672018220
 2. Michael Elyas Ernawan - 672018221
 3. Kadek Widiana - 672018222
+
+<hr>
+
+- Aplikasi jual/beli cryptocurrency sederhana dengan integrasi database firebase.
+- Proyek tugas akhir mata kuliah Pengembangan Aplikasi Mobile C.
